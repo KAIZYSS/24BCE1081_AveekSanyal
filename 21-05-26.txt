@@ -1,0 +1,80 @@
+use CollegeDb;
+
+CREATE TABLE Employee (
+    empid int,
+    ename varchar(50),
+    department varchar(50),
+    salary int
+);
+
+INSERT INTO Employee VALUES
+(1,'Rahul','HR',25000),
+(2,'Amit','HR',30000),
+(3,'Riya','IT',50000),
+(4,'Ananya','IT',45000),
+(5,'Sourav','Sales',35000);
+
+insert into employee values
+(6,'Karan','Finance',175000),
+(7,'Priya','Finance',160000),
+(8,'Neha','Marketing',120000),
+(9,'Arjun','Marketing',110000),
+(10,'Vikram','IT',220000),
+(11,'Sneha','HR',150000),
+(12,'Rohit','Sales',80000);
+
+SELECT department,
+SUM(salary) AS Total_Salary
+FROM Employee
+GROUP BY department;
+
+select department, sum(salary)
+from employee
+group by department
+having sum(salary) < 300000;
+
+select * from worker;
+
+select * from worker
+limit 2 offset 3;
+
+create table toppers (
+    id int,
+    foreign key (id)
+    references worker(worker_id)
+);
+
+insert into toppers values
+(2),
+(5),
+(7);
+
+select worker_id, first_name, department
+from worker
+where worker_id in (
+    select id from toppers
+);
+
+select department, sum(salary)
+
+
+from worker
+group by department
+order by sum(salary)
+limit 2;
+
+select first_name, salary
+from worker
+where department = 'Admin'
+order by salary desc
+limit 1 offset 1;
+
+select first_name, department, salary
+from worker w1
+where salary = (
+    select distinct salary
+    from worker w2
+    where w1.department = w2.department
+    order by salary desc
+    limit 1 offset 1
+);
